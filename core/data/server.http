@@ -1,0 +1,10 @@
+POST http://127.0.0.1:8000/import/
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary123456
+Accept: application/json
+
+------WebKitFormBoundary123456
+Content-Disposition: form-data; name="file"; filename="data.json"
+Content-Type: application/json
+
+< ./data.json
+------WebKitFormBoundary123456--
