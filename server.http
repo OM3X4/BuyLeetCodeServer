@@ -11,3 +11,31 @@ Content-Type: application/json
     "content": "You Can Make HTTP Request By Playing Basketball At Home",
     "author": 1
 }
+
+
+### Login
+POST http://127.0.0.1:8000/token/
+Content-Type: application/json
+
+{
+    "username": "omar",
+    "password": "omar"
+}
+
+### Register
+POST http://127.0.0.1:8000/register/
+Content-Type: application/json
+
+{
+    "username": "kareem",
+    "email": "kareem@example.com",
+    "password": "kareem"
+}
+
+### refresh token
+POST http://127.0.0.1:8000/token/refresh
+Content-Type: application/json
+
+{
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc0MzM0NTM1MiwiaWF0IjoxNzQzMjU4OTUyLCJqdGkiOiJkMWNhMjBlODA0Njk0NmFiYThjNjlkMjA0ZDlkMmMyNyIsInVzZXJfaWQiOjF9.cLvXfXMZbynJci0UsW7n7mjXRHB9SAf_C6Ic_2ayyBk"
+}
