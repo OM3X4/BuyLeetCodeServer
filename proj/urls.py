@@ -16,9 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path , include
-from core.views import import_data
+from core.dataImportView import import_data
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('import/' , import_data , name='import_data'),  # URL for importing data
+    path('' ,  include("core.urls")),  # URL for importing data
 ]

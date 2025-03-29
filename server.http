@@ -1,0 +1,13 @@
+GET http://127.0.0.1:8000/posts/
+Content-Type: application/json
+
+
+### Create Post
+POST http://127.0.0.1:8000/posts/
+Content-Type: application/json
+
+{
+    "title": "How To Make Http Request",
+    "content": "You Can Make HTTP Request By Playing Basketball At Home",
+    "author": 1
+}

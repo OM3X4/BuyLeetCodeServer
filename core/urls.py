@@ -1,8 +1,10 @@
 from django.urls import path
 
-from .views import import_data
-
+from .views import get_questions , get_posts
 
 urlpatterns = [
-    path('/', import_data, name='import_data'),  # URL for importing data
+    # questions/?offset=x&limit=y
+    path('questions/', get_questions),
+    # posts/?offset=x&limit=y
+    path('posts/' , get_posts)
 ]
