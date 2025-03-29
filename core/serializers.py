@@ -16,6 +16,11 @@ class TagSerilizer(serializers.ModelSerializer):
         model = Tag
         fields = '__all__'
 
+class CommentSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = '__all__'
+
 class PostSerializer(serializers.ModelSerializer):
     has_liked = serializers.SerializerMethodField()
 
@@ -28,6 +33,21 @@ class PostSerializer(serializers.ModelSerializer):
         if user.is_authenticated:
             return obj.upvoters.filter(id=user.id).exists()
         return False
+
+
+class DetailPostSerializer(serializers.ModelSerializer):
+    comments = CommentSerializers(many=True)
+
+    class Meta:
+        model = Post
+        fields = ["id" , "title" , "content" , "created_at" , "author" , "comments"]
+
+
+class DetailQuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ["id" , "title" ,"difficulty" , "url"]
+
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)  # Ensures password isn't returned in response

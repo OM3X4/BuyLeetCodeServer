@@ -25,5 +25,4 @@ urlpatterns = [
     path('' ,  include("core.urls")),  # URL for importing data
     path("token/" , TokenObtainPairView.as_view()),
     path("token/refresh" , TokenRefreshView.as_view()),
-    path("payment/", include("payment.urls")),
 ]

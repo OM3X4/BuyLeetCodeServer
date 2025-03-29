@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'core',
-    'payment'
 ]
 
 MIDDLEWARE = [
@@ -134,12 +133,8 @@ REST_FRAMEWORK = {
 
 }
 
-import os
-from dotenv import load_dotenv
+from datetime import timedelta
 
-load_dotenv()
-
-PAYMOB_API_KEY = os.getenv("PAYMOB_API_KEY")
-PAYMOB_INTEGRATION_ID = os.getenv("PAYMOB_INTEGRATION_ID")
-PAYMOB_IFRAME_ID = os.getenv("PAYMOB_IFRAME_ID")
-PAYMOB_HMAC_SECRET = os.getenv("PAYMOB_HMAC_SECRET")
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=1),
+}

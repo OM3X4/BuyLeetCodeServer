@@ -1,5 +1,11 @@
 GET http://127.0.0.1:8000/posts/
 Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQzMjc5ODc2LCJpYXQiOjE3NDMyNzk1NzYsImp0aSI6ImYxYmI0NjIzMGYwMTQwZTU5ZWE4MDVjMzgyODEyZGY5IiwidXNlcl9pZCI6MX0.fZkD8qM_Gu_cGExFgHgCI1v8u0jWokQM92CDMblcW3o
+
+
+### GET Comments
+GET http://127.0.0.1:8000/comments/1/
+Content-Type: application/json
 
 
 ### Create Post
@@ -39,3 +45,22 @@ Content-Type: application/json
 {
     "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc0MzM0NTM1MiwiaWF0IjoxNzQzMjU4OTUyLCJqdGkiOiJkMWNhMjBlODA0Njk0NmFiYThjNjlkMjA0ZDlkMmMyNyIsInVzZXJfaWQiOjF9.cLvXfXMZbynJci0UsW7n7mjXRHB9SAf_C6Ic_2ayyBk"
 }
+
+
+### Toggle Like A Post
+POST http://127.0.0.1:8000/upvote/1/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQzMjc5ODc2LCJpYXQiOjE3NDMyNzk1NzYsImp0aSI6ImYxYmI0NjIzMGYwMTQwZTU5ZWE4MDVjMzgyODEyZGY5IiwidXNlcl9pZCI6MX0.fZkD8qM_Gu_cGExFgHgCI1v8u0jWokQM92CDMblcW3o
+
+### Get Post Comments
+POST http://127.0.0.1:8000/comments/1/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQzMjg3NTg1LCJpYXQiOjE3NDMyODM5ODUsImp0aSI6IjljZjhmZTRmOTI4ZTRjYTA4MDIyYWM5MzU1MWVjM2NlIiwidXNlcl9pZCI6MX0.QQwxrp_XCKO11ZKvMuWBoO1JgTuroZnO6BbRHuKjjxE
+
+{
+    "content": "this comment is sent from rest client"
+}
+
+
+### Get Questions
+GET http://127.0.0.1:8000/questions/
