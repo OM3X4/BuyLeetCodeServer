@@ -35,7 +35,7 @@ def get_posts(request):
         offset = int(request.GET.get("offset" , 0))
 
 
-        data = Post.objects.all()[offset : offset + limit]
+        data = Post.objects.all().prefetch_related()[offset : offset + limit]
         serial = PostSerializer(data , many=True , context={"request": request})
 
         return Response(serial.data , status=status.HTTP_200_OK)

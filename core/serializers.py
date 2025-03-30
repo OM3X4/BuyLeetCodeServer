@@ -23,16 +23,21 @@ class CommentSerializers(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     has_liked = serializers.SerializerMethodField()
+    upvotes = serializers.SerializerMethodField()
+    author_name = serializers.CharField(source='author.username', read_only=True)
 
     class Meta:
         model = Post
-        fields = ["id" , "title" , "content" , "author" , "has_liked"]
+        fields = ["id" , "upvotes" , "title" , "content" , "author" , "author_name" , "has_liked" , "created_at"]
 
     def get_has_liked(self , obj):
         user = self.context["request"].user
         if user.is_authenticated:
             return obj.upvoters.filter(id=user.id).exists()
         return False
+
+    def get_upvotes(self , obj):
+        return obj.upvoters.count()
 
 
 class DetailPostSerializer(serializers.ModelSerializer):
