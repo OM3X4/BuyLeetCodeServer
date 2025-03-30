@@ -2,11 +2,12 @@ from rest_framework.response import Response
 from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from .models import Question , Tag , Company , Post , Comment
-from .serializers import QuestionSerilizer , TagSerilizer , PostSerializer , UserSerializer , DetailPostSerializer , CommentSerializers
+from .serializers import QuestionSerializer , DetailQuestionSerializer , TagSerializer , PostSerializer , UserSerializer , DetailPostSerializer , CommentSerializers , CompanySerializer
 from django.contrib.auth.models import User
 from rest_framework import status
 from django.contrib.auth.hashers import make_password
 from django.shortcuts import get_object_or_404
+from rest_framework_simplejwt.tokens import RefreshToken
 
 @api_view(["GET"])
 def get_questions(request):
@@ -15,9 +16,16 @@ def get_questions(request):
     limit = int(request.GET.get("limit" , 50))
 
     questions = Question.objects.all()[offset : limit + offset]
-    serial = QuestionSerilizer(questions , many=True)
+    serial = QuestionSerializer(questions , many=True)
 
     return Response(serial.data)
+
+
+@api_view(["GET"])
+def get_question(request , pk):
+    data = get_object_or_404(Question , pk=pk)
+    serial = DetailQuestionSerializer(data)
+    return Response(serial.data , status=status.HTTP_200_OK)
 
 @api_view(["GET" , "POST"])
 def get_posts(request):
@@ -42,9 +50,14 @@ def get_posts(request):
 def register(request):
     serial = UserSerializer(data=request.data)
     if serial.is_valid():
-        serial.save()
-        return Response({"message": "User Created Successfully"} , status=status.HTTP_201_CREATED)
-    return Response({"message": "Data Not Valid"} , status=status.HTTP_400_BAD_REQUEST)
+        user = serial.save() # Save the user and get the user instance.
+        refresh = RefreshToken.for_user(user) # Generate refresh and access tokens
+        return Response({
+            "message": "User Created Successfully",
+            "refresh": str(refresh),
+            "access": str(refresh.access_token),
+        }, status=status.HTTP_201_CREATED)
+    return Response(serial.error_messages, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(["POST"])
@@ -77,5 +90,18 @@ def comments(request , pk):
             serial.save(author=request.user , post=post)
             return Response({"Message" : "Done"} , status=status.HTTP_201_CREATED)
         return Response({"Message": "In Valid Data" , "errors": serial.error_messages} , status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(["GET"])
+def get_companies(request):
+    data = Company.objects.all()
+    serial = CompanySerializer(data, many=True)
+    return Response(serial.data , status=status.HTTP_200_OK)
+
+@api_view(["GET"])
+def get_tags(request):
+    data = Tag.objects.all()
+    serial = TagSerializer(data, many=True)
+    return Response(serial.data , status=status.HTTP_200_OK)
+
 
 

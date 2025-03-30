@@ -3,14 +3,14 @@ from core.models import Question , Tag , Company , Post , Comment
 from django.contrib.auth.models import User
 
 
-class QuestionSerilizer(serializers.ModelSerializer):
+class DetailQuestionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Question
         fields = '__all__'
 
 
-class TagSerilizer(serializers.ModelSerializer):
+class TagSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tag
@@ -43,11 +43,16 @@ class DetailPostSerializer(serializers.ModelSerializer):
         fields = ["id" , "title" , "content" , "created_at" , "author" , "comments"]
 
 
-class DetailQuestionSerializer(serializers.ModelSerializer):
+class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Post
+        model = Question
         fields = ["id" , "title" ,"difficulty" , "url"]
 
+
+class CompanySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Company
+        fields ="__all__"
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)  # Ensures password isn't returned in response

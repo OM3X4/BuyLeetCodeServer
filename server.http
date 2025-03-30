@@ -24,8 +24,8 @@ POST http://127.0.0.1:8000/token/
 Content-Type: application/json
 
 {
-    "username": "omar",
-    "password": "omar"
+    "email": "vite@ex.com",
+    "password": "vite"
 }
 
 ### Register
@@ -33,7 +33,7 @@ POST http://127.0.0.1:8000/register/
 Content-Type: application/json
 
 {
-    "username": "kareem",
+    "username": "moustafa",
     "email": "kareem@example.com",
     "password": "kareem"
 }
@@ -64,3 +64,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 
 ### Get Questions
 GET http://127.0.0.1:8000/questions/
+
+
+### Get Question Details
+GET http://127.0.0.1:8000/questions/2/
+
+
+### Get Companies
+GET http://127.0.0.1:8000/companies/
+
+
+### Get Tags
+GET http://127.0.0.1:8000/tags/
