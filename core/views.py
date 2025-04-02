@@ -2,12 +2,15 @@ from rest_framework.response import Response
 from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from .models import Question , Tag , Company , Post , Comment
-from .serializers import QuestionSerializer , DetailQuestionSerializer , TagSerializer , PostSerializer , UserSerializer , DetailPostSerializer , CommentSerializers , CompanySerializer
+from .serializers import CreatePostSerializer , QuestionSerializer , DetailQuestionSerializer , TagSerializer , PostSerializer , UserSerializer , DetailPostSerializer , CommentSerializers , CompanySerializer
 from django.contrib.auth.models import User
 from rest_framework import status
 from django.contrib.auth.hashers import make_password
 from django.shortcuts import get_object_or_404
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
+from django.db.models import Count
 
 @api_view(["GET"])
 def get_questions(request):
@@ -35,16 +38,29 @@ def get_posts(request):
         offset = int(request.GET.get("offset" , 0))
 
 
-        data = Post.objects.all().prefetch_related()[offset : offset + limit]
+        # data = Post.objects.order_by().prefetch_related()[offset : offset + limit]
+        data = (
+    Post.objects.annotate(upvotes_count=Count("upvoters"))
+    .select_related("author")  # Optimizes ForeignKey lookup
+    .prefetch_related("upvoters")  # Optimizes ManyToMany lookup
+    .order_by("-upvotes_count", "-created_at")  # Orders by upvotes first, then date
+)[offset : offset + limit]
         serial = PostSerializer(data , many=True , context={"request": request})
 
         return Response(serial.data , status=status.HTTP_200_OK)
-    else:
-        serial = PostSerializer(data=request.data , author=request.user)
-        if serial.is_valid():
-            serial.save()
-            return Response({"Message" : "Posted Successfully"} , status=status.HTTP_201_CREATED)
-        return Response({"Message" : "Data Not Valid"} , status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def new_post(request):
+    serial = CreatePostSerializer(data=request.data)
+    if serial.is_valid():
+        serial.save(author=request.user)  # Pass author explicitly when saving
+        return Response({"Message": "Posted Successfully"}, status=status.HTTP_201_CREATED)
+    return Response({"Message": "Data Not Valid"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
 
 @api_view(["POST"])
 def register(request):
@@ -61,6 +77,7 @@ def register(request):
 
 
 @api_view(["POST"])
+@permission_classes([IsAuthenticated])
 def upVote(request , pk):
     post = get_object_or_404(Post , pk=pk)
     if request.user in post.upvoters.all():

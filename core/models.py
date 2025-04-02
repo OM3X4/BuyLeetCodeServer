@@ -33,6 +33,10 @@ class Post(models.Model):
     author = models.ForeignKey(User , on_delete=models.CASCADE)  # Assuming you have a User model or similar for authors
     upvoters = models.ManyToManyField(User, related_name='upvoted_posts', blank=True , null=True)
 
+
+    class Meta:
+        ordering = ['-created_at']
+
 class Comment(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

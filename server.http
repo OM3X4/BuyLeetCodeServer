@@ -9,13 +9,13 @@ Content-Type: application/json
 
 
 ### Create Post
-POST http://127.0.0.1:8000/posts/
+POST http://127.0.0.1:8000/newpost/
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQzNTE0MzYyLCJpYXQiOjE3NDM1MTQzNTIsImp0aSI6Ijc4ODIwYzUwODE4ZTQ3NjQ5YzhjMTFhMTY2OWVhOTQ5IiwidXNlcl9pZCI6NX0.YQQqcxmI4WXY3WGLTMbYolYjd4-jvlJwH7IeVQABCaU
 
 {
     "title": "How To Make Http Request",
-    "content": "You Can Make HTTP Request By Playing Basketball At Home",
-    "author": 1
+    "content": "You Can Make HTTP Request By Playing Basketball At Home"
 }
 
 
@@ -24,8 +24,24 @@ POST http://127.0.0.1:8000/token/
 Content-Type: application/json
 
 {
-    "email": "vite@ex.com",
+    "username": "vite",
     "password": "vite"
+}
+
+### Verify Token
+POST http://127.0.0.1:8000/token/verify/
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQzNTE0MzYyLCJpYXQiOjE3NDM1MTQzNTIsImp0aSI6Ijc4ODIwYzUwODE4ZTQ3NjQ5YzhjMTFhMTY2OWVhOTQ5IiwidXNlcl9pZCI6NX0.YQQqcxmI4WXY3WGLTMbYolYjd4-jvlJwH7IeVQABCaU"
+}
+
+### Refresh
+POST http://127.0.0.1:8000/token/refresh/
+Content-Type: application/json
+
+{
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc0MzU5NTkzNywiaWF0IjoxNzQzNTA5NTM3LCJqdGkiOiI5YjhhZDRmMzQ4NWI0OTBiOGUxYWQ4ZmM5ZjVjNzg5NSIsInVzZXJfaWQiOjV9.g8Vm67Xtz71iYat7q3o49SMAGAkS8lTv8rz-K-AP_To"
 }
 
 ### Register
@@ -50,7 +66,7 @@ Content-Type: application/json
 ### Toggle Like A Post
 POST http://127.0.0.1:8000/upvote/1/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQzMjc5ODc2LCJpYXQiOjE3NDMyNzk1NzYsImp0aSI6ImYxYmI0NjIzMGYwMTQwZTU5ZWE4MDVjMzgyODEyZGY5IiwidXNlcl9pZCI6MX0.fZkD8qM_Gu_cGExFgHgCI1v8u0jWokQM92CDMblcW3o
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQzNTM1MTM4LCJpYXQiOjE3NDM1MjQzMzgsImp0aSI6ImU3Yjg5YjlhMDc2ODQyNmRiYmU1MmIwMTdjNGQ3ZWE1IiwidXNlcl9pZCI6NX0.FloBOa_dAbmpigUjT_Xq4qtbnY0dZrIATvZGV3chK54
 
 ### Get Post Comments
 POST http://127.0.0.1:8000/comments/1/

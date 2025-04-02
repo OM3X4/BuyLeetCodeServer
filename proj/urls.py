@@ -18,11 +18,12 @@ from django.contrib import admin
 from django.urls import path , include
 from core.dataImportView import import_data
 
-from rest_framework_simplejwt.views import TokenObtainPairView , TokenRefreshView
+from rest_framework_simplejwt.views import TokenObtainPairView , TokenRefreshView , TokenVerifyView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('' ,  include("core.urls")),  # URL for importing data
     path("token/" , TokenObtainPairView.as_view()),
-    path("token/refresh" , TokenRefreshView.as_view()),
+    path("token/refresh/" , TokenRefreshView.as_view()),
+    path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
 ]
